@@ -15,10 +15,10 @@ const store = configureStore({
 console.log('store', store);
 console.log('store', store.getState());
 
-store.dispatch({
-  type:"ADD_MOVIES",
-  movies: [{name: "Aditya"}]
-})
+// store.dispatch({
+//   type:"ADD_MOVIES",
+//   movies: [{name: "Aditya"}]
+// })
 
 console.log("after state", store.getState());
 
@@ -27,7 +27,7 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <App store={store}/>
     </React.StrictMode>
   </Provider>
 );

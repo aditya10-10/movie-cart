@@ -1,6 +1,6 @@
-// {
-//     type: 'INCREASE_COUNT'
-// }
-// {
-//     type: 'DECREASE_COUNT'
-// }
+// actions.js
+export const addMovies = (movies) => ({
+    type: 'ADD_MOVIES',
+    movies,
+  });
+  
