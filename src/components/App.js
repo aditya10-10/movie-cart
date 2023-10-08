@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { addMovies } from '../actions/index'; // Assuming you have an actions file
+import { addMovies } from '../actions'; // Assuming you have an actions file
 
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
@@ -15,10 +15,7 @@ class App extends Component {
       this.forceUpdate();
 
     });
-    store.dispatch({
-      type: 'ADD_MOVIES',
-      movies: data
-    });
+    store.dispatch(addMovies(data));
     // this.props.addMovies(data);
     console.log(this.props.store.getState());
   }
