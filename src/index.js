@@ -19,7 +19,7 @@ console.log('store', store.getState());
 //   type:"ADD_MOVIES",
 //   movies: [{name: "Aditya"}]
 // })
-
+ 
 console.log("after state", store.getState());
 
 const root = createRoot(document.getElementById("root"));
