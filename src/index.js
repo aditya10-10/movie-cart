@@ -12,15 +12,15 @@ const store = configureStore({
   },
 });
 
-console.log('store', store);
-console.log('store', store.getState());
+// console.log('store', store);
+// console.log('store', store.getState());
 
 // store.dispatch({
 //   type:"ADD_MOVIES",
 //   movies: [{name: "Aditya"}]
 // })
  
-console.log("after state", store.getState());
+// console.log("after state", store.getState());
 
 const root = createRoot(document.getElementById("root"));
 

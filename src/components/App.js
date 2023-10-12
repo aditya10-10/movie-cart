@@ -36,11 +36,11 @@ class App extends Component {
   
 
   render() {
-//     console.log('Movies:', this.props.movies);
-// console.log('Favourites:', this.props.favourites);
+      console.log('Movies:', this.props.movies);
+      console.log('Favourites:', this.props.favourites);
 
     const { movies, favourites, showFavourites } = this.props; // Use this.props.movies instead of this.props.list
-    console.log('render', this.props.store.getState());
+    // console.log('render', this.props.store.getState());
 
     const displayMovie = showFavourites ? favourites: movies;
  
@@ -72,14 +72,15 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     movies: state.movies.movies,
-    favourites: state.movies.favourites, // Include favourites from the state
+    favourites: state.movies.favourites,
+    showFavourites: state.movies.showFavourites,
   };
 };
 
-
 const mapDispatchToProps = {
   addMovies,
-  addFavourite
+  addFavourite,
+  setShowFavourites
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
