@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { addMovies, addFavourite } from '../actions'; // Assuming you have an actions file
-
+import { addMovies, addFavourite, setShowFavourites } from '../actions'; // Assuming you have an actions file
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
 import { data } from "../data"; // Correct import path for your data
@@ -21,10 +20,8 @@ class App extends Component {
   isMovieFavourite = (movie) => {
     const { favourites } = this.props;
   
-    // Find the index of the movie in favourites based on a unique identifier (e.g., 'id')
-    const index = favourites.findIndex((favMovie) => favMovie.id === movie.id);
-    
 
+    const index = favourites.indexOf(movie);
     // const index = fav
 
     if(index !== -1){
@@ -32,27 +29,32 @@ class App extends Component {
     }
     return false;
   }
-  
+
+  onChangeTab = (val) => {
+    this.props.store.dispatch(setShowFavourites(val));
+  }
   
 
   render() {
-    console.log('Movies:', this.props.movies);
-console.log('Favourites:', this.props.favourites);
+//     console.log('Movies:', this.props.movies);
+// console.log('Favourites:', this.props.favourites);
 
-    const { movies, isFavourite } = this.props; // Use this.props.movies instead of this.props.list
+    const { movies, favourites, showFavourites } = this.props; // Use this.props.movies instead of this.props.list
     console.log('render', this.props.store.getState());
 
+    const displayMovie = showFavourites ? favourites: movies;
+ 
     return (
       <div className="App">
         <Navbar />
         <div className="main">
           <div className="tabs">
-            <div className="tab">Movies</div>
-            <div className="tab">Favourites</div>
+            <div className= {`tab ${showFavourites ? '' : 'active-tabs'}`} onClick = { () => this.onChangeTab(false)}>Movies</div>
+            <div className= {`tab ${showFavourites ? 'active-tabs' : ''}`} onClick = { () => this.onChangeTab(true)}>Favourites</div>
           </div>
           <div className="list">
-            {movies.map((movie, index) => (
-              <MovieCard 
+            {displayMovie.map((movie, index) => (
+              <MovieCard  
                 movie={movie} 
                 key={`movies-${index}`} 
                 dispatch = {this.props.store.dispatch}
@@ -60,6 +62,7 @@ console.log('Favourites:', this.props.favourites);
                  />
             ))}
           </div>
+          {displayMovie.length ===  0 ? <div className="no-movies"> NO MOVIES </div> : null}
         </div>
       </div>
     );

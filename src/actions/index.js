@@ -1,6 +1,8 @@
 
 export const ADD_MOVIES = "ADD_MOVIES";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
+export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE";
+export const SET_SHOW_FAVOURITES = "SET_SHOW_FAVOURITES";
 
 
 export function addMovies (movies){
@@ -10,10 +12,6 @@ export function addMovies (movies){
     }
 }
 
-
-// actions/index.js
-// export const ADD_FAVOURITES = "ADD_FAVOURITES"; // Add this line
-
 export function addFavourite(movie) {
   return {
     type: ADD_FAVOURITES,
@@ -21,15 +19,18 @@ export function addFavourite(movie) {
   };
 }
 
-// ... your other actions
 
-
-// actions/index.js
-export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE";
-
-export function removeFavourite(movieId) {
+export function removeFavourite(movie) {
   return {
     type: REMOVE_FAVOURITE,
-    movieId,
+    movie,
   };
 }
+
+export function setShowFavourites(val) {
+  return {
+    type: SET_SHOW_FAVOURITES,
+    val
+  };
+}
+ 

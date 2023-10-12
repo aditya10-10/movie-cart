@@ -1,9 +1,10 @@
 // reducers/movies.js
-import { ADD_MOVIES, ADD_FAVOURITES, REMOVE_FAVOURITE } from "../actions";
+import { ADD_MOVIES, ADD_FAVOURITES, REMOVE_FAVOURITE, SET_SHOW_FAVOURITES  } from "../actions";
 
 const initialMoviesStore = {
   movies: [],
   favourites: [],
+  showFavourites: false
 };
 
 export default function movies(state = initialMoviesStore, action) {
@@ -19,10 +20,16 @@ export default function movies(state = initialMoviesStore, action) {
         favourites: [...state.favourites, action.movie],
       };
     case REMOVE_FAVOURITE:
+      const filterArray = state.favourites.filter((movie) => movie !== action.movie);
       return {
         ...state,
-        favourites: state.favourites.filter((movie) => movie.id !== action.movieId),
+        favourites: filterArray
       };
+    case SET_SHOW_FAVOURITES:
+      return {
+        ...state,
+        showFavourites: action.val
+      }
     default:
       return state;
   }

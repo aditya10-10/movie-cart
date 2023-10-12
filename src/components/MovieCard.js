@@ -1,33 +1,3 @@
-
-
-
-//   render() {
-//     const { movie, isFavourite } = this.props;
-//     return (
-//       <div className="movie-card">
-        
-//           <div className="footer">
-//             <div className="rating">{movie.imdbRating}</div>
-//             {
-//               isFavourite
-//               ? <button className="favourite-btn" onClick={this.handleFavouriteClick}>Favourites</button>
-//               : <button className="unfavourite-btn" onClick={this.handleUnFavoriteClick}>Unfavourites</button>
-
-//             }
-
-//  {/* <button className="favourite-btn" onClick={this.handleFavouriteClick}>Favourites</button> */}
-
-            
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-
-
-
-// MovieCard.js
 import React from "react";
 import { connect } from 'react-redux';
 import { addFavourite, removeFavourite } from "../actions";
@@ -40,7 +10,7 @@ class MovieCard extends React.Component {
 
   handleUnFavoriteClick = () => {
     const { movie, dispatch } = this.props;
-    dispatch(removeFavourite(movie.id)); // Assuming you have a unique identifier like 'id'
+    dispatch(removeFavourite(movie)); // Assuming you have a unique identifier like 'id'
   }
 
   render() {
