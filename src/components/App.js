@@ -14,14 +14,14 @@ class App extends Component {
       this.forceUpdate();
     });
     store.dispatch(addMovies(data));
-    console.log(this.props.store.getState());
+    // console.log(this.props.store.getState());
   }
 
   isMovieFavourite = (movie) => {
-    const { favourites } = this.props;
+    const { list } = this.props;
   
 
-    const index = favourites.indexOf(movie);
+    const index = list.favourites.indexOf(movie);
     // const index = fav
 
     if(index !== -1){
@@ -36,11 +36,11 @@ class App extends Component {
   
 
   render() {
-      console.log('Movies:', this.props.movies);
-      console.log('Favourites:', this.props.favourites);
-
-    const { movies, favourites, showFavourites } = this.props; // Use this.props.movies instead of this.props.list
-    // console.log('render', this.props.store.getState());
+    const { list } = this.props;
+    const { movies, favourites, showFavourites } = list; // Use this.props.movies instead of this.props.list
+    console.log('render', this.props.store.getState());
+    console.log('Movies:', this.props.list.movies);
+    console.log('Favourites:', this.props.list.favourites);
 
     const displayMovie = showFavourites ? favourites: movies;
  
@@ -71,7 +71,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    movies: state.movies.movies,
+    list    : state.movies.list,
     favourites: state.movies.favourites,
     showFavourites: state.movies.showFavourites,
   };
