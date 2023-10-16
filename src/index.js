@@ -1,21 +1,27 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-// import { createStore, getDefaultMiddleware } from '@reduxjs/store';
+import { configureStore } from '@reduxjs/toolkit';
 import "./index.css";
 import App from "./components/App";
 // import moviesReducer from './reducers';
+
+
 import  rootReducer  from "./reducers";
 
-const logger  = function ({dispatch, getState}) {
-  return function (next){
-    return function (action){
-      console.log("action", action.type);
+// const logger  = function ({dispatch, getState}) {
+//   return function (next){
+//     return function (action){
+//       console.log("action", action.type);
+//       next(action);
+//     }
+//   }
+// }  
+
+const logger = ({dispatch, getState}) => (next) => (action) => {
+  console.log("action", action.type);
       next(action);
-    }
-  }
-}  
+}
 
 const store = configureStore({
   reducer: {
