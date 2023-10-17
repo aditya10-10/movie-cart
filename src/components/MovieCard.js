@@ -1,21 +1,18 @@
 import React from "react";
-import { connect } from 'react-redux';
-import { addFavourite, removeFavourite } from "../actions";
+
+import { addFavourite, removeFromFav } from "../actions";
 
 class MovieCard extends React.Component {
   handleFavouriteClick = () => {
-    const { movie, dispatch } = this.props;
-    dispatch(addFavourite(movie));
-  }
-
-  handleUnFavoriteClick = () => {
-    const { movie, dispatch } = this.props;
-    dispatch(removeFavourite(movie)); // Assuming you have a unique identifier like 'id'
-  }
-
+    const { movie } = this.props;
+    this.props.dispatch(addFavourite(movie));
+  };
+  handleUnFavClick = () => {
+    const { movie } = this.props;
+    this.props.dispatch(removeFromFav(movie));
+  };
   render() {
-    const { movie, isFavourite } = this.props;
-
+    const { movie } = this.props;
     return (
       <div className="movie-card">
         <div className="left">
@@ -24,23 +21,28 @@ class MovieCard extends React.Component {
         <div className="right">
           <div className="title">{movie.Title}</div>
           <div className="plot">{movie.Plot}</div>
-        <div className="footer">
-          <div className="rating">{movie.imdbRating}</div>
-          {isFavourite ? (
-            <button className="unfavourite-btn" onClick={this.handleUnFavoriteClick}>
-              Unfavourite
-            </button>
-          ) : (
-            <button className="favourite-btn" onClick={this.handleFavouriteClick}>
-              Favourite
-            </button>
-          )}
+          <div className="footer">
+            <div className="rating">{movie.imdbRating}</div>
+            {this.props.isFavourite ? (
+              <button
+                className="unfavourite-btn"
+                onClick={this.handleUnFavClick}
+              >
+                UnFavourite
+              </button>
+            ) : (
+              <button
+                className="favourite-btn"
+                onClick={this.handleFavouriteClick}
+              >
+                Favourite
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 }
 
-export default connect()(MovieCard);
-
+export default MovieCard;

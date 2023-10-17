@@ -1,51 +1,51 @@
-import React from "react";
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import "./index.css";
+import React, { createContext } from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+
 import App from "./components/App";
-// import moviesReducer from './reducers';
+import "./index.css";
+import rootReducer from "./reducers";
 
+const logger =
+  ({ dispatch, getState }) =>
+  (next) =>
+  (action) => {
+    if (typeof action !== "function") {
+      console.log("ACTION TYPE = ", action.type);
+    }
+    next(action);
+  };
 
-import  rootReducer  from "./reducers";
-
-// const logger  = function ({dispatch, getState}) {
-//   return function (next){
-//     return function (action){
-//       console.log("action", action.type);
-//       next(action);
+// const thunk =
+//   ({ dispatch, getState }) =>
+//   (next) =>
+//   (action) => {
+//     if (typeof action === "function") {
+//       action(dispatch);
+//       return;
 //     }
-//   }
-// }  
+//     next(action);
+//   };
 
-const logger = ({dispatch, getState}) => (next) => (action) => {
-  console.log("action", action.type);
-      next(action);
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
+
+export const StoreContext = createContext();
+
+class Provider extends React.Component {
+  render() {
+    const { store } = this.props;
+    return (
+      <StoreContext.Provider value={store}>
+        {this.props.children}
+      </StoreContext.Provider>
+    );
+  }
 }
 
-const store = configureStore({
-  reducer: {
-    movies: rootReducer,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-});
-
-console.log('store', store);
-// console.log('store', store.getState());
-
-// store.dispatch({
-//   type:"ADD_MOVIES",
-//   movies: [{name: "Aditya"}]
-// })
- 
-// console.log("after state", store.getState());
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(
+ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App store={store}/>
-    </React.StrictMode>
-  </Provider>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );
